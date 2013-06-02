@@ -2,20 +2,18 @@
 
 <table>
   <tr>
-    <th>Location</th>
+    <th>Title</th>
     <th>Start time</th>
-    <th>Description</th>
-    <th></th>
+    <th>Location</th>
     <th></th>
     <th></th>
   </tr>
 
 <% @events.each do |event| %>
   <tr>
-    <td><%= event.location %></td>
+    <td><%= link_to event.title || 'Event Title', event %></td>
     <td><%= event.start_time %></td>
-    <td><%= event.description %></td>
-    <td><%= link_to 'Show', event %></td>
+    <td><%= event.location %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
   </tr>

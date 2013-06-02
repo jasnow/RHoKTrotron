@@ -1,5 +1,10 @@
 TroTron::Application.routes.draw do
-  resources :events, defaults: { format: :json }
+  resources :attendees
+
+  resources :events, defaults: { format: :json } do
+    resources :attendees
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
