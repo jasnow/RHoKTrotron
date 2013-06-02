@@ -18,6 +18,7 @@
   <div class="field">
     <%= f.label :phone_number %><br />
     <%= f.text_field :phone_number %>
+    <%= f.hidden_field :event_id, value: params[:event_id] %>
   </div>
   <div class="actions">
     <%= f.submit %>

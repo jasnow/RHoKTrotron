@@ -2,7 +2,7 @@ class AttendeesController < ApplicationController
   # GET /attendees
   # GET /attendees.json
   def index
-    @attendees = Attendee.all
+    @attendees = Attendee.where(event_id: params[:event_id])
 
     respond_to do |format|
       format.html # index.html.erb

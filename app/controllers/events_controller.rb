@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.where(:status => 'ACTIVE')
+    @events = Event.where(:status => 'ACTIVE').where("title is not null")
 
     respond_to do |format|
       format.html # index.html.erb
