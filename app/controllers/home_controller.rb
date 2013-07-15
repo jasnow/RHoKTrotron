@@ -15,7 +15,8 @@ class HomeController < ApplicationController
     message_body = params["Body"]
     from_number = params["From"]
 
-    new_event_keywords = ["N", "NE", "NEW", "", "+"] #TODO: Make this customizable via config file later
+    #TODO: Make this customizable via config file later
+    new_event_keywords = ["N", "NE", "NEW", "", "+"]
     end_event_keywords = ["CLOSE", "DONE", "X", "C"]
     join_event_keywords = ["J", "JOIN"]
     stop_keywords = ["BYE", "XX"]
@@ -31,7 +32,8 @@ class HomeController < ApplicationController
       event.owner = from_number
       event.save
 
-      PhoneNumber.send_sms_message_to_number("Your Code is: #{event.code}", from_number)
+      PhoneNumber.send_sms_message_to_number(
+        "Your Code is: #{event.code}", from_number)
 
     elsif stop_keywords.include? keyword
       #Lazy way to do it, opt attendee out of everything
@@ -39,16 +41,20 @@ class HomeController < ApplicationController
         a.status = 'INACTIVE';
         a.save
       end
-      PhoneNumber.send_sms_message_to_number("Notifications turned off. Thank you.", from_number)
+      PhoneNumber.send_sms_message_to_number(
+        "Notifications turned off. Thank you.", from_number)
 
     elsif join_event_keywords.include? keyword
       if tokenized_message.size > 1
         event_code = tokenized_message[1]
-        event = Event.where(status: 'ACTIVE', code: event_code).first   #TODO: should also take expiry into consideration
+
+        #TODO: should also take expiry into consideration
+        event = Event.where(status: 'ACTIVE', code: event_code).first
 
         if event.present?
           event.add_attendee(from_number)
-          PhoneNumber.send_sms_message_to_number("You have been added. Thank you.", from_number)
+          PhoneNumber.send_sms_message_to_number(
+            "You have been added. Thank you.", from_number)
         end
       end
     else
@@ -58,12 +64,18 @@ class HomeController < ApplicationController
           event.status = 'INACTIVE'
           event.attendees.each{|a| a.status = 'INACTIVE'; a.save}
           event.save
-          PhoneNumber.send_sms_message_to_number("Close successful. Thank you.", from_number)
+          PhoneNumber.send_sms_message_to_number(
+            "Close successful. Thank you.", from_number)
         else
-          event.attendees.select{|attendee| attendee.status == 'ACTIVE' }.each do |attendee|
-            PhoneNumber.send_sms_message_to_number("Notification: #{original_message} \n (Reply \"BYE\" to stop receiving)", attendee.phone_number)
+          event.attendees.select{|attendee|
+          attendee.status == 'ACTIVE' }.each do |attendee|
+            PhoneNumber.send_sms_message_to_number(
+              "Notification: #{original_message} \n (" +
+              "Reply \"BYE\" to stop receiving)",
+              attendee.phone_number)
           end
-          PhoneNumber.send_sms_message_to_number("Notifications sent", from_number)
+          PhoneNumber.send_sms_message_to_number(
+            "Notifications sent", from_number)
         end
       end
     end
