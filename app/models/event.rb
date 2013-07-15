@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
   end
 
   def generate_tron_code
-    Random.rand(1000...10000)    #TODO: Make sure this is unique and not in use by an active event
+    #TODO: Make sure this is unique and not in use by an active event
+    Random.rand(1000...10000)
   end
 end
