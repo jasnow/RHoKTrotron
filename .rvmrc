@@ -1,1 +1,1 @@
-rvm use 2.1.0-rc1@rhoktrotron --create
+rvm use 2.1.0@rhoktrotron --create
