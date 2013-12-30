@@ -1,5 +1,4 @@
 class Attendee < ActiveRecord::Base
-   attr_accessible :name, :phone_number, :event_id
 
   belongs_to :event
 
@@ -8,6 +7,5 @@ class Attendee < ActiveRecord::Base
   def set_defaults
     self.status = 'ACTIVE'
   end
-
 
 end

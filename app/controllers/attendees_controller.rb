@@ -40,7 +40,7 @@ class AttendeesController < ApplicationController
   # POST /attendees
   # POST /attendees.json
   def create
-    @attendee = Attendee.new(params[:attendee])
+    @attendee = Attendee.new(attendee_params)
 
     respond_to do |format|
       if @attendee.save
@@ -62,7 +62,7 @@ class AttendeesController < ApplicationController
     @attendee = Attendee.find(params[:id])
 
     respond_to do |format|
-      if @attendee.update_attributes(params[:attendee])
+      if @attendee.update_attributes(attendee_params)
         format.html { redirect_to @attendee,
           notice: 'Attendee was successfully updated.' }
         format.json { head :no_content }
@@ -84,5 +84,10 @@ class AttendeesController < ApplicationController
       format.html { redirect_to attendees_url }
       format.json { head :no_content }
     end
+  end
+
+private
+  def attendee_params
+    params.require(:attendee).permit(:name, :phone_number, :event_id)
   end
 end

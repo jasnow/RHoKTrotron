@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-   attr_accessible  :location, :start_time, :description,  :owner, :title
+
   has_many :attendees
   before_create :set_defaults
 

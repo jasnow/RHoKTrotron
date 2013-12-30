@@ -1,6 +1,5 @@
 class PhoneNumber < ActiveRecord::Base
-  attr_accessible :country_code, :number
-
+#  attr_accessible :country_code, :number
 
   def self.send_sms_message_to_number(message_body, to_number)
     twilio_client = Twilio::REST::Client.new ENV['TWILIO_SID'] ||
