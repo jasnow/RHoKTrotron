@@ -19,6 +19,10 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+  gem 'codesake-dawn', :require => false
+end
+
 group :development, :test do
   gem 'sqlite3'
 end
