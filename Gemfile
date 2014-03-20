@@ -4,6 +4,7 @@ gem 'rails', '4.1.0.rc1'
 
 gem 'twilio-ruby'
 gem 'bootstrap-sass'
+gem 'sprockets', '2.11.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
